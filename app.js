@@ -53,6 +53,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => { // (7)
 
 app.post("/api/upload/multi", upload.array("files"), (req, res) => { // (7)
   console.log(req.files)
+  console.log(req.body.name)
   res.status(200).json(req.files);
 });
 
