@@ -35,13 +35,12 @@ const storage = multer.diskStorage({ // (2)
 
 const upload = multer({ // (6)
   storage,
-  fileFilter: (req, file, cb) => {
-    if (["image/jpeg", "image/jpg", "image/png"].includes(file.mimetype))
-      cb(null, true);
-    else
-      cb(new Error("해당 파일의 형식을 지원하지 않습니다."), false);
-  }
-  ,
+  // fileFilter: (req, file, cb) => {
+  //   if (["image/jpeg", "image/jpg", "image/png"].includes(file.mimetype))
+  //     cb(null, true);
+  //   else
+  //     cb(new Error("해당 파일의 형식을 지원하지 않습니다."), false);
+  // },
   limits: {
     fileSize: 1024 * 1024 * 5
   }
@@ -52,9 +51,14 @@ app.post("/api/upload", upload.single("file"), (req, res) => { // (7)
 });
 
 app.post("/api/upload/multi", upload.array("files"), (req, res) => { // (7)
-  console.log(req.files)
-  console.log(req.body.name)
-  res.status(200).json(req.files);
+  // console.log(req.files)
+  // console.log(req.body.contents)
+  const returnData = {
+    contents: req.body.contents,
+    files: req.files,
+  }
+  // res.status(200).json(req.files);
+  res.status(200).json(returnData);
 });
 
 app.use("/images", express.static(path.join(__dirname, "/images")));
