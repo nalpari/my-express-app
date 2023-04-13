@@ -61,6 +61,32 @@ app.post("/api/upload/multi", upload.array("files"), (req, res) => { // (7)
   res.status(200).json(returnData);
 });
 
+const searchText = [
+  {"value": "asdf", "label": "가나다라" },
+  {"value": "1234", "label": "abcdefg" },
+  {"value": "4356", "label": "무궁화" },
+  {"value": "6758", "label": "삼천리" },
+  {"value": "ewrt", "label": "식목일" },
+  {"value": "qwer", "label": "제주도" },
+  {"value": "3453", "label": "qwer" },
+  {"value": "asdf", "label": "주정뱅이" },
+  {"value": "2345", "label": "다음주 회식이다" },
+  {"value": "1234", "label": "나의 취미는 다른 회사 회식 기웃거리기" },
+  {"value": "ghjk", "label": "회식중독자" },
+  {"value": "4567", "label": "술먹으러 제주도 가자" }
+]
+
+app.get('/api/example/autocomplete/v1.0/code/search/', (req,res) => {
+  res.send(searchText)
+})
+
+app.get('/api/example/autocomplete/v1.0/code/search/:text', (req, res) => {
+  console.log(req.params.text)
+  const result = searchText.filter((t) => t.label.includes(req.params.text))
+  console.log(searchText.filter((t) => t.label.includes(req.params.text)))
+  res.send(result)
+})
+
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 app.use('/', indexRouter);
