@@ -51,8 +51,8 @@ app.post("/api/upload", upload.single("file"), (req, res) => { // (7)
 });
 
 app.post("/api/upload/multi", upload.array("files"), (req, res) => { // (7)
-  // console.log(req.files)
-  // console.log(req.body.contents)
+  console.log(req.files)
+  console.log(req.body.contents)
   const returnData = {
     contents: req.body.contents,
     files: req.files,
@@ -76,15 +76,21 @@ const searchText = [
   {"value": "4567", "label": "술먹으러 제주도 가자" }
 ]
 
-app.get('/api/example/autocomplete/v1.0/code/search/', (req,res) => {
+app.get('/api/example/autocomplete/v1.0/search/', (req,res) => {
   res.send(searchText)
 })
 
-app.get('/api/example/autocomplete/v1.0/code/search/:text', (req, res) => {
+app.get('/api/example/autocomplete/v1.0/search/:text', (req, res) => {
   console.log(req.params.text)
   const result = searchText.filter((t) => t.label.includes(req.params.text))
   console.log(searchText.filter((t) => t.label.includes(req.params.text)))
   res.send(result)
+})
+
+app.get('/api/example/use-form/v1.0/form-send', (req, res) => {
+  console.log(req.query)
+  const {codeName, groupCodeName, groupCode} = req.query
+  res.send({codeName, groupCodeName, groupCode})
 })
 
 app.use("/images", express.static(path.join(__dirname, "/images")));
