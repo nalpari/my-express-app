@@ -22,7 +22,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+  origin: '*'
+}));
 
 const storage = multer.diskStorage({ // (2)
   destination: (req, file, cb) => { // (3)
@@ -47,7 +50,6 @@ const upload = multer({ // (6)
 });
 
 app.post("/api/upload", upload.single("file"), (req, res) => { // (7)
-  console.log(req)
   console.log(req.file)
   res.status(200).json(req.file);
 });
