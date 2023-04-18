@@ -47,6 +47,8 @@ const upload = multer({ // (6)
 });
 
 app.post("/api/upload", upload.single("file"), (req, res) => { // (7)
+  console.log(req)
+  console.log(req.file)
   res.status(200).json(req.file);
 });
 
